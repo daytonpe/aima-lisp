@@ -6,7 +6,7 @@
 
 ;;;; A minimal facility for defining systems of files
 
-(defparameter *aima-root* (truename "~/public_html/code/") ; <<<<<<<< Edit this <<<<<<
+(defparameter *aima-root* (truename "/Users/daytonpe/Dropbox/utd/6364_ai_min/lisp/aima-lisp/") ; <<<<<<<< Edit this <<<<<<
   "The root directory where the code is stored.")
 
 (defparameter *aima-binary-type*
@@ -36,7 +36,7 @@
   "Define a system as a list of parts.  A part can be a string, which denotes
   a file name; or a symbol, which denotes a (sub)system name; or a list of the
   form (subdirectory / part...), which means the parts are in a subdirectory.
-  The REQUIRES argument is a list of systems that must be loaded before this 
+  The REQUIRES argument is a list of systems that must be loaded before this
   one.  Note that a documentation string is mandatory."
   `(add-aima-system :name ',name
 		    :requires ',requires :doc ',doc :parts ',parts))
@@ -47,7 +47,7 @@
 
 (defun aima-load-binary (&optional (name 'all))
   "Load file(s), prefering binaries to source."
-  (operate-on-aima-system name 'load-binary))			  
+  (operate-on-aima-system name 'load-binary))
 
 (defun aima-compile (&optional (name 'everything))
   "Compile (and load) the file or files that make up an AIMA system."
@@ -86,7 +86,7 @@
 	     (new-path (append path subdirectory)))
 	(funcall directory-operation new-path)
 	(dolist (subpart (nthcdr 2 part))
-	  (operate-on-aima-system subpart operation :load load 
+	  (operate-on-aima-system subpart operation :load load
 				  :path new-path
 				  :directory-operation directory-operation))))
      ((consp part)
@@ -103,7 +103,7 @@
      (t (warn "Unrecognized part: ~S in path ~A" part path)))))
 
 (defun aima-file (name &key (type nil) (path nil))
-  "Given a file name and maybe a file type and a relative path from the 
+  "Given a file name and maybe a file type and a relative path from the
   AIMA directory, return the right complete pathname."
   (make-pathname :name name :type type :defaults *aima-root*
 		 :directory (append (pathname-directory *aima-root*)
@@ -157,11 +157,11 @@
 
 (def-aima-system search (agents)
   "Code from Part II: Problem Solving and Search"
-  ("search" / "test-search" 
-   ("algorithms" / "problems" "simple" "repeated" 
+  ("search" / "test-search"
+   ("algorithms" / "problems" "simple" "repeated"
     "csp" "ida" "iterative" "sma" "minimax")
    ("environments" / "games" "prob-solve")
-   ("domains" / "cannibals" "ttt" "cognac" "nqueens" "path-planning" 
+   ("domains" / "cannibals" "ttt" "cognac" "nqueens" "path-planning"
     "puzzle8" "route-finding" "tsp" "vacuum")
    ("agents" / "ps-agents" "ttt-agent")))
 
